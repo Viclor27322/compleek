@@ -566,6 +566,11 @@
                                           <div class="dropdown-menu dropdown-menu-end py-0"
                                             aria-labelledby="dropdownMenuButton">
                                             <a class="dropdown-item" href="#">Detalles</a>
+                                            <a class="dropdown-item" href="#" id="vencimientoOption">Vencimiento</a>
+                                            <a class="dropdown-item" href="#">Editar</a>
+                                            <a class="dropdown-item" href="#" id="asociarObjetivosOption">Asociar
+                                              objetivos</a>
+                                            <a class="dropdown-item" href="#" id="eliminarOption">Eliminar</a>
                                           </div>
                                         </div>
                                       </div>
@@ -631,6 +636,47 @@
                                         .kanban-items-container {
                                           background-color: transparent !important;
                                         }
+
+                                        .modal-header,
+                                        .modal-footer {
+                                          border: none;
+                                        }
+
+                                        .modal-body {
+                                          padding-top: 0;
+                                        }
+
+                                        .form-group {
+                                          margin-bottom: 15px;
+                                        }
+
+                                        .form-check-label {
+                                          margin-right: 15px;
+                                        }
+
+                                        .form-check-inline {
+                                          padding-left: 0;
+                                        }
+
+                                        .form-select,
+                                        .form-control {
+                                          margin-top: 5px;
+                                        }
+
+                                        .form-description {
+                                          display: block;
+                                          margin-top: 5px;
+                                          color: #6c757d;
+                                          font-size: 0.875em;
+                                        }
+
+                                        .form-legend {
+                                          display: block;
+                                          text-align: center;
+                                          color: #6c757d;
+                                          font-size: 0.875em;
+                                          margin-top: 15px;
+                                        }
                                       </style>
                                       <div class="card-body">
                                         <div class="row kanban-items-container" style="max-height: none;">
@@ -676,7 +722,8 @@
                                                           <div class="dropdown-menu dropdown-menu-end py-0"
                                                             aria-labelledby="dropdownMenuButton">
                                                             <a class="dropdown-item" href="#">Editar</a>
-                                                            <a class="dropdown-item" href="#">Ajustes</a>
+                                                            <a class="dropdown-item" href="#"
+                                                              id="settingsOption">Ajustes</a>
                                                             <a class="dropdown-item" href="#">Eliminar</a>
                                                           </div>
                                                         </div>
@@ -684,6 +731,9 @@
                                                     </div>
                                                   </div>
                                                 </div>
+
+
+
                                                 <div class="collapse" id="collapse-div-objetivos">
                                                   <div class="mt-3">
                                                     <div class="row mx-3">
@@ -1234,6 +1284,224 @@
         </div>
       </div>
   </main>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="settingsModalLabel">Cambiar la prioridad/tipo/valor de resultados clave</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="settingsForm">
+            <div class="form-group">
+              <label for="medidaResultado">Medida resultado</label>
+              <select class="form-select" id="medidaResultado" required>
+                <option value="" disabled selected>Seleccione una medida</option>
+                <option value="" disabled class="text-muted">Porcentaje</option>
+                <option value="porcentaje">%</option>
+                <option value="" disabled class="text-muted">Moneda</option>
+                <option value="moneda">$</option>
+              </select>
+
+            </div>
+            <div class="form-group">
+              <label for="valorInicial">Valor inicial</label>
+              <input type="number" class="form-control" id="valorInicial" required>
+            </div>
+            <div class="form-group">
+              <label for="valorMeta">Valor meta</label>
+              <input type="number" class="form-control" id="valorMeta" required>
+            </div>
+            <div class="form-group">
+              <label>Decimales</label>
+              <div class="form-check form-check-inline ms-4">
+                <input class="form-check-input" type="radio" name="decimales" id="decimales0" value="0" required>
+                <label class="form-check-label" for="decimales0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="decimales" id="decimales1" value="1" required>
+                <label class="form-check-label" for="decimales1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="decimales" id="decimales2" value="2" required>
+                <label class="form-check-label" for="decimales2">2</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="prioridad">Prioridad</label>
+              <select class="form-select" id="prioridad" required>
+                <option value="" disabled selected>Seleccione una prioridad</option>
+                <option value="">*4 - incremento</option>
+                <option value="">*3</option>
+                <option value="">*2</option>
+                <option value="">*1</option>
+                <option value="">1</option>
+                <option value="">%2</option>
+                <option value="">%3</option>
+                <option value="">%4 - dismunición</option>
+              </select>
+              <span class="form-description">La prioridad se utiliza para medir la importancia de un resultado clave en
+                específico. Puede cambiar hasta 4 veces su valor al calcular el objetivo completado.</span>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-warning">Resetear</button>
+          <button type="button" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal para Vencimiento -->
+  <div class="modal fade" id="vencimientoModal" tabindex="-1" aria-labelledby="vencimientoModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="vencimientoModalLabel">Cambiar período del objetivo</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="vencimientoForm">
+            <div class="form-group">
+              <label for="anoPeriodo">Año del período</label>
+              <select class="form-select" id="anoPeriodo" required>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="periodo">Períodos</label>
+              <select class="form-select" id="periodo" required>
+                <option value="2024-1">2024 - 1er período</option>
+                <option value="2024-2">2024 - 2do período</option>
+              </select>
+              <span class="form-legend">Fecha correspondiente al periodo 29-04-2024 - 23-08-2024<br>cambiar el periodo
+                del objetivo desenlazará el objetivo</span>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para Asociar Objetivos -->
+  <div class="modal fade" id="asociarObjetivosModal" tabindex="-1" aria-labelledby="asociarObjetivosModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="asociarObjetivosModalLabel">Asociar objetivos</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-pills" id="pill-myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="pill-home-tab" data-bs-toggle="tab" href="#pill-tab-home" role="tab"
+                aria-controls="pill-tab-home" aria-selected="true">Personal</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pill-profile-tab" data-bs-toggle="tab" href="#pill-tab-profile" role="tab"
+                aria-controls="pill-tab-profile" aria-selected="false">Departamento</a>
+            </li>
+          </ul>
+          <div class="search-box" data-list='{"valueNames":["title"]}'>
+            <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+              <input class="form-control search-input fuzzy-search" type="search"
+                placeholder="Buscar objetivos personales..." aria-label="Search" />
+              <span class="fas fa-search search-box-icon"></span>
+            </form>
+          </div>
+          <div class="tab-content border p-3 mt-3" id="pill-myTabContent">
+            <div class="tab-pane fade show active" id="pill-tab-home" role="tabpanel" aria-labelledby="pill-home-tab">
+              Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro
+              synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher
+              retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip
+              placeat salvia cillum iphone.
+            </div>
+            <div class="tab-pane fade" id="pill-tab-profile" role="tabpanel" aria-labelledby="pill-profile-tab">
+              Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1
+              labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft
+              beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad
+              vinyl cillum PBR. Homo nostrud organic.
+            </div>
+            <div class="tab-pane fade" id="pill-tab-contact" role="tabpanel" aria-labelledby="pill-contact-tab">
+              Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro
+              fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone
+              skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings
+              gentrify squid 8-bit cred pitchfork.
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para Eliminar -->
+  <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eliminarModalLabel">¿Está seguro de que desea eliminar este elemento?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ¡No podrá revertir la eliminación del elemento!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('settingsOption').addEventListener('click', function (event) {
+        event.preventDefault(); // Prevenir el comportamiento predeterminado del enlace
+        var settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
+        settingsModal.show();
+      });
+
+      document.getElementById('vencimientoOption').addEventListener('click', function (event) {
+        event.preventDefault();
+        var vencimientoModal = new bootstrap.Modal(document.getElementById('vencimientoModal'));
+        vencimientoModal.show();
+      });
+
+      document.getElementById('asociarObjetivosOption').addEventListener('click', function (event) {
+        event.preventDefault();
+        var asociarObjetivosModal = new bootstrap.Modal(document.getElementById('asociarObjetivosModal'));
+        asociarObjetivosModal.show();
+      });
+
+      document.getElementById('eliminarOption').addEventListener('click', function (event) {
+        event.preventDefault();
+        var eliminarModal = new bootstrap.Modal(document.getElementById('eliminarModal'));
+        eliminarModal.show();
+      });
+    });
+  </script>
+
 
   <!-- ===============================================-->
   <!--    End of Main Content-->
